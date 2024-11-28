@@ -1,0 +1,14 @@
+.venv
+venv
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.pkl
+.vercel/
+*.json
+node_modules/
+railway
