@@ -23,5 +23,7 @@ def redirect_root(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('library/', include('library.urls')),
+    path('api/', include('library.urls')),  # Add this line
+    path('api/auth/', include('authentication.urls')),  # Changed from 'auth.urls'
+
 ]
