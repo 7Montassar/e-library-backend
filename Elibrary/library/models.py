@@ -25,10 +25,11 @@ class Book(models.Model):
     file = models.FileField(upload_to='books/')
     created_at = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=20, choices=Category.choices, default=Category.FICTION)
-    cover = models.models.ImageField(upload_to='books/')
+    cover = models.URLField(max_length=200, blank=True, null=True)
     def __str__(self):
         return self.title
-      
+    
     class Meta:
-      ordering = ['title']
-      db_table = 'books'
+        ordering = ['title']
+        db_table = 'books'
+        indexes = [models.Index(fields=['title'])]
