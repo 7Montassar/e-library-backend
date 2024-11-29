@@ -25,7 +25,6 @@ class Book(models.Model):
     file = models.FileField(upload_to='books/')
     created_at = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=20, choices=Category.choices, default=Category.FICTION)
-    cover = models.models.ImageField(upload_to='books/')
     def __str__(self):
         return self.title
       

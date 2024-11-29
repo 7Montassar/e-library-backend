@@ -1,18 +1,29 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from .models import Book
-from rest_framework.permissions import IsAuthenticated
 from .serializers import BookSerializer
-from authentication.permissions import IsAdmin, IsVisitor
+from authentication.permissions import IsAuthenticatedAndReadOnly, IsVisitorAndCanAdd, IsAdminAndCanPerformAll
+
 class BookViewSet(viewsets.ModelViewSet):
-   queryset = Book.objects.all()
-   serializer_class = BookSerializer
-   permission_classes = [IsAuthenticated, IsVisitor]  # This allows authenticated visitors to GET and POST
-   def get_permissions(self):
-       """
-       Instantiates and returns the list of permissions that this view requires.
-       """
-       if self.action in ['list', 'retrieve', 'create']:
-           permission_classes = [IsAuthenticated, (IsAdmin | IsVisitor)]
-       else:  # update, delete
-           permission_classes = [IsAuthenticated, IsAdmin]
-       return [permission() for permission in permission_classes]
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    def get_permissions(self):
+        """
+        Assign permissions based on actions.
+        """
+        if self.action in ['list', 'retrieve']:  # Read-only actions
+            permission_classes = [IsAuthenticatedAndReadOnly | IsVisitorAndCanAdd | IsAdminAndCanPerformAll]
+        elif self.action == 'create':  # Add book
+            permission_classes = [IsVisitorAndCanAdd | IsAdminAndCanPerformAll]
+        else:  # Update and delete actions
+            permission_classes = [IsAdminAndCanPerformAll]
+        return [permission() for permission in permission_classes]
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAdminAndCanPerformAll])
+    def admin_only(self, request):
+        """
+        Custom admin-only action.
+        """
+        return Response({"message": "Admin action performed!"})
