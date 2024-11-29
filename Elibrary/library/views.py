@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from .models import Book
 from .serializers import BookSerializer
-from authentication.permissions import IsAdmin, IsVisitor
 from authentication.permissions import IsAuthenticatedAndReadOnly, IsVisitorAndCanAdd, IsAdminAndCanPerformAll
 import os, requests
 from dotenv import load_dotenv
