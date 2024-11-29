@@ -1,3 +1,5 @@
+from django.http import FileResponse
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -72,3 +74,8 @@ class BookViewSet(viewsets.ModelViewSet):
         Custom admin-only action.
         """
         return Response({"message": "Admin action performed!"})
+
+def download_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    response = FileResponse(book.file.open(), as_attachment=True, filename=book.file.name)
+    return response

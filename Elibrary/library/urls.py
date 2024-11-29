@@ -5,4 +5,5 @@ router = DefaultRouter()
 router.register(r'books', views.BookViewSet, basename='book')
 urlpatterns = [
    path('', include(router.urls)),
+   path('books/<int:book_id>/download/', views.download_book, name='download_book'),
 ]
