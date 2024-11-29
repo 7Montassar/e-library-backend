@@ -32,6 +32,8 @@ def signin(request):
         return Response({
             'refresh': str(refresh),
             'access': str(refresh.access_token),
-            'role': user.role
+            'role': user.role,
+            'username': user.full_name
+
         })
     return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
