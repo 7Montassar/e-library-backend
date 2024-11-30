@@ -15,14 +15,15 @@ class Category(models.TextChoices):
     BUSINESS = 'business'
     PHILOSOPHY = 'philosophy'
     POLITICS = 'politics'
-    
+    CLASSICS = 'classics'
+    COMPUTERS = 'computers'
     
 
 class Book(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=100)
     author = models.CharField(max_length=50)
     description = models.TextField()
-    file = models.FileField(upload_to='books/')
+    file = models.FileField(upload_to='books/', max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=20, choices=Category.choices, default=Category.FICTION)
     cover = models.URLField(max_length=200, blank=True, null=True)
