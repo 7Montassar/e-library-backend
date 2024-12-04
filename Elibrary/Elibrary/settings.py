@@ -31,6 +31,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
+    "e-library-backend-r1u0.onrender.com"
 ]
 
 
