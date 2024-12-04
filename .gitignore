@@ -12,3 +12,4 @@ __pycache__/
 *.json
 node_modules/
 railway
+.vercel
